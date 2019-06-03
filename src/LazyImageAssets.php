@@ -8,7 +8,7 @@ use yii\web\AssetBundle;
 
 class LazyImageAssets extends AssetBundle
 {
-    public $sourcePath = '@vendor/ziya/LazyImage/assets';
+    public $sourcePath = '@vendor/ziya/ziya-lazy-image/src/assets';
     public $js =[
         'lazy-loading.2.0.0.js'
     ];

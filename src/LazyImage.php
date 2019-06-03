@@ -21,14 +21,17 @@ class LazyImage extends Widget
         parent::init();
         $view = $this->getView();
         LazyImageAssets::register($view);
+        if ($this->defaultImage === null) {
+            $this->defaultImage =\Yii::getAlias('@vendor').'/ziya/ziya-lazy-image/src/assets/images/infinity.svg';
+        }
     }
     public function run()
     {
-        $this->getView()->registerJs("
+        $this->getView()->registerJs('
             $(document).ready(function(){
                 lazyload();
             });
-        ",View::POS_END);
+        ',View::POS_END);
         return "<img class=\"lazyload\" src=\"{$this->defaultImage}\" data-src=\"{$this->path}\" />";
     }
 }
