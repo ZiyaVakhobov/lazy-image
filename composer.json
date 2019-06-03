@@ -1,0 +1,13 @@
+{
+    "name": "ziya/ziya-lazy-image",
+    "description": "Package for lazy loading images.",
+    "type": "library",
+    "require": {
+        "yiisoft/yii2": "~2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "ziya\\LazyImage\\": "src"
+        }
+    }
+}
