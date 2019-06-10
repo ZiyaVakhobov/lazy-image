@@ -13,7 +13,9 @@ class LazyImage extends Widget implements LazyImageInterface
     public $id;
     public $defaultImage;
     public $path;
-    public $options;
+    public $options =[
+        'class' =>"asd"
+    ];
     public $alt;
 
 
@@ -29,19 +31,17 @@ class LazyImage extends Widget implements LazyImageInterface
     }
     public function run()
     {
+        $this->options = array_merge(
+            $this->options,
+            [
+                "class"=>"lazyload ".$this->options['class']??'',
+                "data-src"=>$this->path
+            ]);
         $this->getView()->registerJs('
             $(document).ready(function(){
                 lazyload();
             });
         ',View::POS_END);
-        return Html::img($this->defaultImage,[
-            'options' => array_merge(
-                [
-                    "class"=>"lazyload ".$this->options['class']??'',
-                    "data-src"=>$this->path
-                ],
-                $this->options
-            )
-        ]);
+        return Html::img($this->defaultImage,$this->options);
     }
 }
