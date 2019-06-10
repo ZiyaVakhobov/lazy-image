@@ -5,9 +5,10 @@ namespace ziya\LazyImage;
 
 
 use yii\base\Widget;
+use yii\helpers\Html;
 use yii\web\View;
 
-class LazyImage extends Widget
+class LazyImage extends Widget implements LazyImageInterface
 {
     public $id;
     public $defaultImage;
@@ -16,13 +17,14 @@ class LazyImage extends Widget
     public $alt;
 
 
+
     public function init()
     {
         parent::init();
         $view = $this->getView();
         LazyImageAssets::register($view);
         if ($this->defaultImage === null) {
-            $this->defaultImage =\Yii::getAlias('@vendor').'/ziya/ziya-lazy-image/src/assets/images/infinity.svg';
+            $this->defaultImage =self::IMAGE_INFINITY;
         }
     }
     public function run()
@@ -32,6 +34,14 @@ class LazyImage extends Widget
                 lazyload();
             });
         ',View::POS_END);
-        return "<img class=\"lazyload\" src=\"{$this->defaultImage}\" data-src=\"{$this->path}\" />";
+        return Html::img($this->defaultImage,[
+            'options' => array_merge(
+                [
+                    "class"=>"lazyload ".$this->options['class']??'',
+                    "data-src"=>$this->path
+                ],
+                $this->options
+            )
+        ]);
     }
 }
